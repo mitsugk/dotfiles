@@ -15,6 +15,12 @@
 (add-to-load-path "elisp" "conf" "public_repos")
 
 ;======================================================================
+; init-loader
+;======================================================================
+(require 'init-loader)
+(init-loader-load "~/.emacs.d/conf")
+
+;======================================================================
 ; character code
 ;======================================================================
 (when (equal emacs-major-version 21) (require 'un-define))
@@ -31,31 +37,31 @@
 ; frame size & color
 ;=======================================================================
 (when window-system
-(setq initial-frame-alist
+  (setq initial-frame-alist
 	(append (list
-		   '(foreground-color . "white")		;; 文字色
-		   '(background-color . "#333366")		;; 背景色
-		   '(border-color . "black")
-		   '(mouse-color . "white")
-                   '(cursor-type . "bar")
-		   '(cursor-color . "white")
-		   '(width . 125)				;; フレームの幅
-		   '(height . 45)				;; フレームの高さ
-		   '(top . 50)					;; Y 表示位置
-		   '(left . 140)				;; X 表示位置
-		   )
+		 '(foreground-color . "white")		;; 文字色
+		 '(background-color . "#333366")	;; 背景色
+		 '(border-color . "black")
+		 '(mouse-color . "white")
+		 '(cursor-type . "bar")
+		 '(cursor-color . "white")
+		 '(width . 125)				;; フレームの幅
+		 '(height . 45)				;; フレームの高さ
+		 '(top . 50)				;; Y 表示位置
+		 '(left . 140)				;; X 表示位置
+		 )
 		initial-frame-alist))
-(setq default-frame-alist initial-frame-alist))
+  (setq default-frame-alist initial-frame-alist))
 
 ;=======================================================================
 ; misc
 ;=======================================================================
-(mouse-wheel-mode)						;;ホイールマウス
+(mouse-wheel-mode t)						;;ホイールマウス
 (global-font-lock-mode t)					;;文字の色つけ
 (setq line-number-mode t)					;;カーソルのある行番号を表示
 (auto-compression-mode t)					;;日本語infoの文字化け防止
 (set-scroll-bar-mode 'right)					;;スクロールバーを右に表示
-(global-set-key "\C-z" 'undo)					;;UNDO
+; (global-set-key "\C-z" 'undo)					;;UNDO
 (setq frame-title-format					;;フレームのタイトル指定
 	(concat "%b - emacs@" system-name))
 
@@ -65,10 +71,28 @@
 ;(setq make-backup-files nil)					;;バックアップファイルを作成しない
 ;(setq visible-bell t)						;;警告音を消す
 ;(setq kill-whole-line t)					;;カーソルが行頭にある場合も行全体を削除
-;(when (boundp 'show-trailing-whitespace) (setq-default show-trailing-whitespace t))	;;行末のスペースを強調表示
-;; "C-t" でウィンドウを切り替える。初期値はtranspose-chars
-;(define-key global-map (kbd "C-t") 'other-window)
+;(when (boundp 'show-trailing-whitespace)
+; (setq-default show-trailing-whitespace t))	                ;;行末のスペースを強調表示
 
+;; C-mにnewline-and-indentを割り当てる。
+(global-set-key (kbd "C-m") 'newline-and-indent)
+;; 折り返しトグルコマンド
+(define-key global-map (kbd "C-c l") 'toggle-truncate-lines)
+;; "C-t" でウィンドウを切り替える。初期値はtranspose-chars
+(define-key global-map (kbd "C-t") 'other-window)
+
+;;; 現在行のハイライト
+(defface my-hl-line-face
+  ;; 背景がdarkならば背景色を紺に
+  '((((class color) (background dark))
+     (:background "NavyBlue" t))
+    ;; 背景がlightならば背景色を緑に
+    (((class color) (background light))
+     (:background "LightGoldenrodYellow" t))
+    (t (:bold t)))
+  "hl-line's my face")
+(setq hl-line-face 'my-hl-line-face)
+(global-hl-line-mode t)
 
 ;======================================================================
 ; auto-install
@@ -361,6 +385,11 @@
     (setq moccur-use-migemo t)))
 
 ;=======================================================================
+; wgrep
+;=======================================================================
+(require 'wgrep nil t)
+
+;=======================================================================
 ; moccur-edit
 ;=======================================================================
 (require 'moccur-edit nil t)
@@ -429,10 +458,10 @@
     ;; describe-bindingsをAnythingに置き換える
     (descbinds-anything-install)))
 
-;; M-yにanything-show-kill-ringを割り当てる
+;; M-yにanything-show-kill-ringを割り当て
 (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
 
-;;; P128-129 moccurを利用する──anything-c-moccur
+;;; anything-c-moccur
 (when (require 'anything-c-moccur nil t)
   (setq
    ;; anything-c-moccur用 `anything-idle-delay'
@@ -458,43 +487,4 @@
 ;=======================================================================
 (add-to-list 'backup-directory-alist
              (cons tramp-file-name-regexp nil))
-
-;=======================================================================
-; Erc
-;=======================================================================
-;; Load ERC
-(require 'erc)
-
-(require 'tls)
-(setq tls-program '("gnutls-cli -p %p %h"
-                    "gnutls-cli -p %p %h --protocols ssl3"
-                    "openssl s_client -connect %h:%p -no_ssl2 -ign_eof"))
-
-; M-x start-erc
-(defun start-erc ()
-   "Connect to IRC."
-;(interactive)
-
-(require 'erc-join)
-(setq erc-autojoin-channels-alist '(("irc.paperboy.co.jp"
-					"#all" "#tokyo" "#server" "#server-op" "#sabachi" "shasys"
-					"#ec" "#cmsp" "#dev_cmsp" "#calamel" "#dev_calamel" "#grouptube" "#goope"
-					"#heteml" "#petit" "#30days-album"
-					"#jugemkey" "#dev_jugemkey" "#booklog" "#dev_booklog" "logpi"))))
-(erc-tls :server "irc.paperboy.co.jp" :port 6668 :password "paperb0y" :nick "kitano_e" :full-name "kitano")
-(setq erc-server-auto-reconnect nil)
-
-(setq erc-server-coding-system '(utf-8 . utf-8))
-(setq erc-echo-notices-in-minibuffer-flag t)
-
-(require 'erc-match)
-    (setq erc-keywords '("北野" "kitano"))
-
-(setq erc-track-exclude-types '("join" "nick" "part" "quit" "mode" "324" "329" "332" "333" "353" "477"))
-
-;(add-hook 'erc-after-connect
-;          '(lambda (SERVER NICK)
-;             (cond
-;              ((string-match "freenode\\.net" SERVER)
-;               (erc-message "PRIVMSG" "NickServ identify password")))))
 

@@ -20,4 +20,6 @@
   ("local-encoding" base64-encode-region)
   ("local-decoding" base64-decode-region)
   ("remote-encoding" tramp-perl-encode-with-module)
-  ("remote-decoding" tramp-perl-decode-with-module)))
+  ("remote-decoding" tramp-perl-decode-with-module))
+ (["scpc" nil "sudo" nil]
+  nil))
