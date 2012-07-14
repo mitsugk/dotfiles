@@ -79,6 +79,7 @@ alias gvim="gvim -geometry 100x40+240+100"
 export HISTSIZE=10000
 export HISTCONTROL=ignoreboth
 
-export EDITOR=vi
+export EDITOR=vim
+export LESSEDIT='vim %f'
 
 export SSH_CONFIG=./ssh_config

@@ -1,9 +1,6 @@
 ;======================================================================
 ; load-path
 ;======================================================================
-(when (< emacs-major-version 23)
-  (defvar user-emacs-directory "~/emacs.d"))
-
 ;; load-pathを追加する関数の定義
 (defun add-to-load-path (&rest paths)
   (let (path)
@@ -33,23 +30,25 @@
 ;=======================================================================
 ; frame size & color
 ;=======================================================================
+(when window-system
 (setq initial-frame-alist
 	(append (list
 		   '(foreground-color . "white")		;; 文字色
 		   '(background-color . "#333366")		;; 背景色
 		   '(border-color . "black")
 		   '(mouse-color . "white")
+                   '(cursor-type . "bar")
 		   '(cursor-color . "white")
-		   '(width . 100)				;; フレームの幅
-		   '(height . 40)				;; フレームの高さ
+		   '(width . 125)				;; フレームの幅
+		   '(height . 45)				;; フレームの高さ
 		   '(top . 50)					;; Y 表示位置
 		   '(left . 140)				;; X 表示位置
 		   )
 		initial-frame-alist))
-(setq default-frame-alist initial-frame-alist)
+(setq default-frame-alist initial-frame-alist))
 
 ;=======================================================================
-; Misc
+; misc
 ;=======================================================================
 (mouse-wheel-mode)						;;ホイールマウス
 (global-font-lock-mode t)					;;文字の色つけ
@@ -461,30 +460,41 @@
              (cons tramp-file-name-regexp nil))
 
 ;=======================================================================
-; erc
+; Erc
 ;=======================================================================
+;; Load ERC
+(require 'erc)
+
 (require 'tls)
+(setq tls-program '("gnutls-cli -p %p %h"
+                    "gnutls-cli -p %p %h --protocols ssl3"
+                    "openssl s_client -connect %h:%p -no_ssl2 -ign_eof"))
+
+; M-x start-erc
+(defun start-erc ()
+   "Connect to IRC."
+;(interactive)
+
+(require 'erc-join)
+(setq erc-autojoin-channels-alist '(("irc.paperboy.co.jp"
+					"#all" "#tokyo" "#server" "#server-op" "#sabachi" "shasys"
+					"#ec" "#cmsp" "#dev_cmsp" "#calamel" "#dev_calamel" "#grouptube" "#goope"
+					"#heteml" "#petit" "#30days-album"
+					"#jugemkey" "#dev_jugemkey" "#booklog" "#dev_booklog" "logpi"))))
+(erc-tls :server "irc.paperboy.co.jp" :port 6668 :password "paperb0y" :nick "kitano_e" :full-name "kitano")
+(setq erc-server-auto-reconnect nil)
 
 (setq erc-server-coding-system '(utf-8 . utf-8))
-(require 'erc-join)
-(erc-autojoin-mode 1)
-(setq erc-autojoin-channels-alist
-          '(("irc.paperboy.co.jp" 
-	          ;;"#emacs" 
-	          ;;"#gentoo-bugs" 
-	          ;;"#gentoo-sunrise" 
-	          ;;"#gentoo-dev-help" 
-	          "#sabachi" "#cmsp"
-		       ;;"#gentoo" 
-		       "#gentoo-ja" "#emacs-lisp-ja" "#emacs-ja")))
-;; "##linux" 
+(setq erc-echo-notices-in-minibuffer-flag t)
 
-(setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
-				"324" "329" "332" "333" "353" "477"))
+(require 'erc-match)
+    (setq erc-keywords '("北野" "kitano"))
 
-(add-hook 'erc-after-connect
-          '(lambda (SERVER NICK)
-             (cond
-              ((string-match "freenode\\.net" SERVER)
-               (erc-message "PRIVMSG" "NickServ identify password")))))
+(setq erc-track-exclude-types '("join" "nick" "part" "quit" "mode" "324" "329" "332" "333" "353" "477"))
+
+;(add-hook 'erc-after-connect
+;          '(lambda (SERVER NICK)
+;             (cond
+;              ((string-match "freenode\\.net" SERVER)
+;               (erc-message "PRIVMSG" "NickServ identify password")))))
 
