@@ -488,3 +488,16 @@
 (add-to-list 'backup-directory-alist
              (cons tramp-file-name-regexp nil))
 
+;=======================================================================
+; org
+;=======================================================================
+(require 'org)
+(org-remember-insinuate)
+;; メモを格納するorgファイルの設定
+(setq org-directory "~/memo/")
+(setq org-default-notes-file (expand-file-name "memo.org" org-directory))
+;; テンプレートの設定
+(setq org-remember-templates
+      '(("Note" ?n "** %?\n   %i\n  %a\n   %t" nil "Inbox")
+	("Todo" ?t "** TODO %?\n  %i\n   %a\n   %t"   nil "Inbox")))
+;; select template: [n]ote [t]odo
