@@ -56,23 +56,37 @@
 ;=======================================================================
 ; misc
 ;=======================================================================
-(mouse-wheel-mode t)						;;ホイールマウス
-(global-font-lock-mode t)					;;文字の色つけ
-(setq line-number-mode t)					;;カーソルのある行番号を表示
-(auto-compression-mode t)					;;日本語infoの文字化け防止
-(set-scroll-bar-mode 'right)					;;スクロールバーを右に表示
-; (global-set-key "\C-z" 'undo)					;;UNDO
-(setq frame-title-format					;;フレームのタイトル指定
+;;ホイールマウス
+(mouse-wheel-mode t)
+;;文字の色つけ
+(global-font-lock-mode t)
+;;カーソルのある行番号を表示
+(setq line-number-mode t)
+;;日本語infoの文字化け防止
+(auto-compression-mode t)
+;;スクロールバーを右に表示
+(set-scroll-bar-mode 'right)
+;;UNDO
+; (global-set-key "\C-z" 'undo)
+;;フレームのタイトル指定
+(setq frame-title-format
 	(concat "%b - emacs@" system-name))
+;;時計を表示
+(display-time)
+;;24時間表示
+(setq display-time-24hr-format t)
+;;Ctrl-Hでバックスペース
+(global-set-key "\C-h" 'backward-delete-char)
 
-(display-time)							;;時計を表示
-(setq display-time-24hr-format t)                               ;;24時間表示
-(global-set-key "\C-h" 'backward-delete-char)			;;Ctrl-Hでバックスペース
-;(setq make-backup-files nil)					;;バックアップファイルを作成しない
-;(setq visible-bell t)						;;警告音を消す
-;(setq kill-whole-line t)					;;カーソルが行頭にある場合も行全体を削除
+;;バックアップファイルを作成しない
+;(setq make-backup-files nil)
+;;警告音を消す
+;(setq visible-bell t)
+;;カーソルが行頭にある場合も行全体を削除
+;(setq kill-whole-line t)
+;;行末のスペースを強調表示
 ;(when (boundp 'show-trailing-whitespace)
-; (setq-default show-trailing-whitespace t))	                ;;行末のスペースを強調表示
+;(setq-default show-trailing-whitespace t))
 
 ;; C-mにnewline-and-indentを割り当てる。
 (global-set-key (kbd "C-m") 'newline-and-indent)
@@ -81,7 +95,7 @@
 ;; "C-t" でウィンドウを切り替える。初期値はtranspose-chars
 (define-key global-map (kbd "C-t") 'other-window)
 
-;;; 現在行のハイライト
+;; 現在行のハイライト
 (defface my-hl-line-face
   ;; 背景がdarkならば背景色を紺に
   '((((class color) (background dark))
@@ -93,6 +107,73 @@
   "hl-line's my face")
 (setq hl-line-face 'my-hl-line-face)
 (global-hl-line-mode t)
+
+;  
+(setq transient-mark-mode t)
+
+
+;======================================================================
+; sequential-command
+;======================================================================
+(require 'sequential-command-config)
+(sequential-command-setup-keys)
+
+;======================================================================
+; uniquify
+;======================================================================
+(require 'uniquify)
+;; filename<dir>形式のバッファ名にする
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+;; *で囲まれたバッファ名は対象外
+(setq uniquify-ignore-buffers-re "*[^*]+*")
+
+;======================================================================
+; iswitchb.el
+;======================================================================
+(iswitchb-mode 1)
+;; バッファ読み取り関数をiswitchbに
+(setq read-buffer-function 'iswitchb-read-buffer)
+;; 部分文字列の代わりに正規表現を
+(setq iswitchb-regexp t)
+;; 新しいバッファを作成するときに問い合わせなし
+(setq iswitchb-prompt-newbuffer nil)
+
+;======================================================================
+; recentf
+;======================================================================
+(setq recentf-max-saved-items 500)
+(setq recentf-exclude '("/TAGS$" "/var/tmp/"))
+(require 'recentf-ext)
+
+;======================================================================
+; bookmark
+;======================================================================
+(setq bookmark-save-flag 1)
+(progn
+  (setq bookmark-sort-flag nil)
+  (defun bookmark-arrange-latest-top ()
+    (let ((latest (bookmark-get-bookmark bookmark)))
+      (setq bookmark-alist (cons latest (delq latest bookmark-alist))))
+    (bookmark-save))
+  (add-hook 'bookmark-after-jump-hook 'bookmark-arrange-latest-top))
+
+;======================================================================
+; tempbuf
+;======================================================================
+(require 'tempbuf)
+(add-hook 'find-file-hooks 'turn-on-tempbuf-mode)
+(add-hook 'dired-mode-hook 'turn-on-tempbuf-mode)
+
+;======================================================================
+; auto-save-buffers
+;======================================================================
+(require 'auto-save-buffers)
+(run-with-idle-timer 2 t 'auto-save-buffers)
+
+;======================================================================
+; wdired
+;======================================================================
+(define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
 ;======================================================================
 ; auto-install
@@ -491,13 +572,17 @@
 ;=======================================================================
 ; org
 ;=======================================================================
-(require 'org)
+(require 'org-install)
+(setq org-startup-truncated nil)
+(setq org-return-follows-link t)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (org-remember-insinuate)
 ;; メモを格納するorgファイルの設定
 (setq org-directory "~/memo/")
-(setq org-default-notes-file (expand-file-name "memo.org" org-directory))
+(setq org-default-notes-file (concat org-directory "agenda.org"))
 ;; テンプレートの設定
 (setq org-remember-templates
-      '(("Note" ?n "** %?\n   %i\n  %a\n   %t" nil "Inbox")
-	("Todo" ?t "** TODO %?\n  %i\n   %a\n   %t"   nil "Inbox")))
-;; select template: [n]ote [t]odo
+      '(("Todo" ?t "** TODO %?\n   %i\n   %a\n   %t" nil "Inbox")
+        ("Bug" ?b "** TODO %?   :bug:\n   %i\n   %a\n   %t" nil "Inbox")
+        ("Idea" ?i "** %?\n   %i\n   %a\n   %t" nil "New Ideas")
+        ))
