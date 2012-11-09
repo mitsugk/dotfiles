@@ -88,4 +88,3 @@ export LESSEDIT='vim %f'
 
 export SSH_CONFIG=./ssh_config
 
-export HOGE=hoge
