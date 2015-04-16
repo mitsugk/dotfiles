@@ -1,24 +1,10 @@
 ;======================================================================
-; load-path
+; package.el
 ;======================================================================
-;; load-pathを追加する関数の定義
-(defun add-to-load-path (&rest paths)
-  (let (path)
-    (dolist (path paths paths)
-      (let ((default-directory
-	      (expand-file-name (concat user-emacs-directory path))))
-	(add-to-list 'load-path default-directory)
-	(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-	    (normal-top-level-add-subdirs-to-load-path))))))
-
-;; 引数のディレクトリとサブディレクトリをload-pathに追加
-(add-to-load-path "elisp" "conf" "public_repos")
-
-;======================================================================
-; init-loader
-;======================================================================
-(require 'init-loader)
-(init-loader-load "~/.emacs.d/conf")
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
 
 ;======================================================================
 ; character code
@@ -53,6 +39,11 @@
 		initial-frame-alist))
   (setq default-frame-alist initial-frame-alist))
 
+(defun set-alpha (alpha-num)
+  "set frame parameter 'alpha"
+  (interactive "nAlpha: ")
+  (set-frame-parameter nil 'alpha (cons alpha-num '(90))))
+
 ;=======================================================================
 ; misc
 ;=======================================================================
@@ -78,16 +69,6 @@
 ;;Ctrl-Hでバックスペース
 (global-set-key "\C-h" 'backward-delete-char)
 
-;;バックアップファイルを作成しない
-;(setq make-backup-files nil)
-;;警告音を消す
-;(setq visible-bell t)
-;;カーソルが行頭にある場合も行全体を削除
-;(setq kill-whole-line t)
-;;行末のスペースを強調表示
-;(when (boundp 'show-trailing-whitespace)
-;(setq-default show-trailing-whitespace t))
-
 ;; C-mにnewline-and-indentを割り当てる。
 (global-set-key (kbd "C-m") 'newline-and-indent)
 ;; 折り返しトグルコマンド
@@ -107,10 +88,8 @@
   "hl-line's my face")
 (setq hl-line-face 'my-hl-line-face)
 (global-hl-line-mode t)
-
-;  
+ 
 (setq transient-mark-mode t)
-
 
 ;======================================================================
 ; sequential-command
@@ -163,55 +142,6 @@
 (require 'tempbuf)
 (add-hook 'find-file-hooks 'turn-on-tempbuf-mode)
 (add-hook 'dired-mode-hook 'turn-on-tempbuf-mode)
-
-;======================================================================
-; auto-save-buffers
-;======================================================================
-(require 'auto-save-buffers)
-(run-with-idle-timer 2 t 'auto-save-buffers)
-
-;======================================================================
-; wdired
-;======================================================================
-(define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
-
-;======================================================================
-; auto-install
-;======================================================================
-(when (require 'auto-install nil t)
-  (setq auto-install-directory "~/.emacs.d/elisp/")
-  (auto-install-update-emacswiki-package-name t)
-  (auto-install-compatibility-setup))
-
-;======================================================================
-; package
-;======================================================================
-(when (require 'package nil t)
-  (add-to-list 'package-archives
-	       '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives
-	       '("ELPA" . "http://tromey.com/elpa/"))
-  (package-initialize))
-
-;======================================================================
-; install-elisp
-;======================================================================
-(require 'install-elisp)
-(setq install-elisp-repository-directory "~/.emacs.d/elisp")
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(display-time-mode t)
- '(tool-bar-mode nil)
- '(tooltip-mode nil))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
 
 ;======================================================================
 ; cua-mode
@@ -336,44 +266,6 @@
   (setq ruby-block-highlight-toggle t))
 
 ;======================================================================
-; inf-ruby
-;======================================================================
-(autoload 'run-ruby "inf-ruby"
-  "Run an inferior Ruby process")
-(autoload 'inf-ruby-keys "inf-ruby"
-  "Set local key defs for inf-ruby in ruby-mode")
-
-;; ruby-mode-hook用の関数を定義
-(defun ruby-mode-hooks ()
-  (inf-ruby-keys)
-  (ruby-electric-mode t)
-  (ruby-block-mode t))
-;; ruby-mode-hookに追加
-(add-hook 'ruby-mode-hook 'ruby-mode-hooks)
-
-;======================================================================
-; Flymake
-;======================================================================
-(defun flymake-ruby-init ()
-  (list "ruby" (list "-c" (flymake-init-create-temp-buffer-copy
-                           'flymake-create-temp-inplace))))
-
-(add-to-list 'flymake-allowed-file-name-masks
-             '("\\.rb\\'" flymake-ruby-init))
-
-(add-to-list 'flymake-err-line-patterns
-             '("\\(.*\\):(\\([0-9]+\\)): \\(.*\\)" 1 2 nil 3))
-
-;; python
-;; (when (require 'flymake-python nil t)
-  ;; flake8を利用する
-  ;; (when (executable-find "flake8")
-  ;;  (setq flymake-python-syntax-checker "flake8"))
-  ;; pep8を利用する
-  ;; (setq flymake-python-syntax-checker "pep8")
-;;  )
-
-;======================================================================
 ; ctags
 ;======================================================================
 (require 'ctags nil t)
@@ -481,25 +373,6 @@
   (save-buffer))
 
 ;=======================================================================
-; howm
-;=======================================================================
-(setq howm-directory (concat user-emacs-directory "howm"))
-(when (require 'howm-mode nil t)
-  (define-key global-map (kbd "C-c ,,") 'howm-menu))
-
-;; howmメモを保存と同時に閉じる
-(defun howm-save-buffer-and-kill ()
-  "howmメモを保存と同時に閉じます。"
-  (interactive)
-  (when (and (buffer-file-name)
-	     (string-match "\\.howm" (buffer-file-name)))
-    (save-buffer)
-    (kill-buffer nil)))
-
-;; C-c C-cでメモの保存と同時にバッファを閉じる
-(define-key howm-mode-map (kbd "C-c C-c") 'howm-save-buffer-and-kill)
-
-;=======================================================================
 ; anything
 ;=======================================================================
 (when (require 'anything nil t)
@@ -557,11 +430,55 @@
   (global-set-key (kbd "C-M-o") 'anything-c-moccur-occur-by-moccur))
 
 ;=======================================================================
-; multi-term
+; helm
 ;=======================================================================
-;;(when (require 'multi-term nil t)
-  ;; 使用するシェルを指定
-;;  (setq multi-term-program "/usr/bin/zsh"))
+(when (require 'helm-config nil t)
+  (helm-mode 1)
+
+  (define-key global-map (kbd "M-x")     'helm-M-x)
+  (define-key global-map (kbd "C-x C-f") 'helm-find-files)
+  (define-key global-map (kbd "C-x C-r") 'helm-recentf)
+  (define-key global-map (kbd "M-y")     'helm-show-kill-ring)
+  (define-key global-map (kbd "C-c i")   'helm-imenu)
+  (define-key global-map (kbd "C-x b")   'helm-buffers-list)
+
+  (define-key helm-map (kbd "C-h") 'delete-backward-char)
+  (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
+  (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
+  (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
+
+  ;; Disable helm in some functions
+  (add-to-list 'helm-completing-read-handlers-alist '(find-alternate-file . nil))
+
+  ;; Emulate `kill-line' in helm minibuffer
+  (setq helm-delete-minibuffer-contents-from-point t)
+  (defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
+    "Emulate `kill-line' in helm minibuffer"
+    (kill-new (buffer-substring (point) (field-end))))
+
+  (defadvice helm-ff-kill-or-find-buffer-fname (around execute-only-if-exist activate)
+    "Execute command only if CANDIDATE exists"
+    (when (file-exists-p candidate)
+      ad-do-it))
+
+  (defadvice helm-ff-transform-fname-for-completion (around my-transform activate)
+    "Transform the pattern to reflect my intention"
+    (let* ((pattern (ad-get-arg 0))
+           (input-pattern (file-name-nondirectory pattern))
+           (dirname (file-name-directory pattern)))
+      (setq input-pattern (replace-regexp-in-string "\\." "\\\\." input-pattern))
+      (setq ad-return-value
+            (concat dirname
+                    (if (string-match "^\\^" input-pattern)
+                        ;; '^' is a pattern for basename
+                        ;; and not required because the directory name is prepended
+                        (substring input-pattern 1)
+                      (concat ".*" input-pattern)))))))
+
+;; For find-file etc.
+(define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
+;; For helm-find-files etc.
+(define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
 
 ;=======================================================================
 ; TRAMP
@@ -586,3 +503,36 @@
         ("Bug" ?b "** TODO %?   :bug:\n   %i\n   %a\n   %t" nil "Inbox")
         ("Idea" ?i "** %?\n   %i\n   %a\n   %t" nil "New Ideas")
         ))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(cua-mode t nil (cua-base))
+ '(display-time-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;=======================================================================
+; edit-server
+;=======================================================================
+(when (require 'edit-server nil t)
+   (setq edit-server-new-frame nil)
+   (edit-server-start))
+
+;=======================================================================
+; enhanced-ruby-mode
+;=======================================================================
+(add-to-list 'load-path "~/.emacs.d/elpa/Enhanced-Ruby-Mode")
+(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+
+;; optional
+
+(setq enh-ruby-program "(path-to-ruby1.9)/bin/ruby") ; so that still works if ruby points to ruby1.8
