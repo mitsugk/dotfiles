@@ -116,3 +116,8 @@ bindkey '^r' peco-select-history
 alias e='emacsclient -nw -a ""'
 alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
+
+# Python Settings
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+eval "$(pyenv init -)"

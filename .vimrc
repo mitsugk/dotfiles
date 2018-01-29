@@ -35,6 +35,10 @@ highlight CursorLine gui=underline guifg=NONE guibg=NONE
 
 " 行番号を表示
 " set number
+
+" ツールバー非表示
+set guioptions-=T
+
 " ステータスラインを表示
 set laststatus=2 " ステータスラインを常に表示
 set statusline=%F%r%h%= " ステータスラインの内容
@@ -78,7 +82,6 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle "Shougo/neosnippet"
 NeoBundle "Shougo/neosnippet-snippets"
-
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'croaker/mustang-vim'
 NeoBundle 'nanotech/jellybeans.vim'
@@ -86,7 +89,9 @@ NeoBundle 'tomasr/molokai'
 
 call neobundle#end()
 
+syntax enable
 let g:solarized_termtrans=1
+set background=dark
 colorscheme solarized
 if &term =~ "xterm-256color" || "screen-256color"
   set t_Co=256
@@ -98,7 +103,6 @@ elseif &term =~ "xterm-color"
   set t_Sb=[4%dm
 endif
 
-syntax enable
 hi PmenuSel cterm=reverse ctermfg=33 ctermbg=222 gui=reverse guifg=#3399ff guibg=#f0e68c
 
 filetype plugin indent on
