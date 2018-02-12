@@ -109,13 +109,13 @@
 ;======================================================================
 ; iswitchb.el
 ;======================================================================
-(iswitchb-mode 1)
+;(iswitchb-mode 1)
 ;; バッファ読み取り関数をiswitchbに
-(setq read-buffer-function 'iswitchb-read-buffer)
+;(setq read-buffer-function 'iswitchb-read-buffer)
 ;; 部分文字列の代わりに正規表現を
-(setq iswitchb-regexp t)
+;(setq iswitchb-regexp t)
 ;; 新しいバッファを作成するときに問い合わせなし
-(setq iswitchb-prompt-newbuffer nil)
+;(setq iswitchb-prompt-newbuffer nil)
 
 ;======================================================================
 ; recentf
@@ -254,8 +254,22 @@
 ;======================================================================
 ; yaml-mode
 ;======================================================================
-(when (require 'yaml-mode nil t)
-  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+;(when (require 'yaml-mode nil t)
+;  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+
+;; 拡張子が .tex なら yatex-mode に
+(setq auto-mode-alist
+  (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+
+;; YaTeX が利用する内部コマンドを定義する
+(setq tex-command "platex2pdf") ;; 自作したコマンドを
+(cond
+  ((eq system-type 'gnu/linux) ;; GNU/Linux なら
+    (setq dvi2-command "evince")) ;; evince で PDF を閲覧
+  ((eq system-type 'darwin) ;; Mac なら
+    (setq dvi2-command "open -a Preview"))) ;; プレビューで
+(add-hook 'yatex-mode-hook '(lambda () (setq auto-fill-function nil)))
 
 ;======================================================================
 ; ruby-electric
