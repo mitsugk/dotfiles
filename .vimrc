@@ -1,7 +1,6 @@
-filetype plugin indent on 
-
-" シンタックスハイライト有効化
-syntax on
+filetype off
+filetype plugin indent off 
+syntax enable 
 
 set nowrap
 set autoindent
@@ -32,7 +31,6 @@ highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
 " アンダーラインを引く(gui)
 highlight CursorLine gui=underline guifg=NONE guibg=NONE
 
-
 " 行番号を表示
 " set number
 
@@ -61,49 +59,94 @@ set wildmenu wildmode=list:full
 set runtimepath+=~/.vim/
 runtime! userautoload/*.vim
 
-filetype off
-filetype plugin indent off
+" dein.vim
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim
-  call neobundle#begin(expand('~/.vim/bundle'))
-endif 
+if dein#load_state(expand('~/.vim/dein'))
+  call dein#begin(expand('~/.vim/dein'))
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+  " TOML for Plugin 
+  let g:dein_dir = expand('~/.vim/dein')
+  let s:toml = g:dein_dir . '/dein.toml'
+  let s:lazy_toml = g:dein_dir . '/dein_lazy.toml'
 
-NeoBundle 'Shougo/vimproc.vim'
-NeoBundle 'Shougo/vimshell.vim'
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 't9md/vim-textmanip'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle "Shougo/neosnippet"
-NeoBundle "Shougo/neosnippet-snippets"
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'croaker/mustang-vim'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'tomasr/molokai'
+  call dein#load_toml(s:toml, {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
-call neobundle#end()
-
-syntax enable
-let g:solarized_termtrans=1
-set background=dark
-colorscheme solarized
-if &term =~ "xterm-256color" || "screen-256color"
-  set t_Co=256
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-elseif &term =~ "xterm-color"
-  set t_Co=8
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
+  call dein#end()
+  call dein#save_state()
 endif
 
-hi PmenuSel cterm=reverse ctermfg=33 ctermbg=222 gui=reverse guifg=#3399ff guibg=#f0e68c
+if dein#check_install()
+  call dein#install()
+endif
+
+" --------------------------------
+" syntastic
+" --------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [
+  \ 'ruby', 'javascript','coffee', 'scss', 'html', 'haml', 'slim', 'sh',
+  \ 'spec', 'vim', 'zsh', 'sass', 'eruby'] }
+
+let g:syntastic_javascript_checkers=['eslint']
+let g:syntastic_coffee_checkers = ['coffeelint']
+let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_ruby_checkers = ['rubocop']
+
+let g:syntastic_error_symbol='✗'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_warning_symbol = '⚠'
+
+let g:syntastic_haskell_checkers = ["hlint"]
+
+" codex
+set tags=tags;/,codex.tags;/
+
+" tagbar for Haskell
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module' : 'm',
+        \ 'class'  : 'c',
+        \ 'data'   : 'd',
+        \ 'type'   : 't'
+    \ }
+\ }
 
 filetype plugin indent on
 

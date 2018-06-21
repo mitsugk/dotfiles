@@ -1,0 +1,43 @@
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets']
+on_i = 1
+on_ft = ['snippet']
+
+[[plugins]]
+repo      = 'Shougo/neomru.vim'
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'Shougo/neocomplcache'
+
+[[plugins]]
+repo = 'kana/vim-filetype-haskell'
+
+[[plugins]]
+repo = 'eagletmt/ghcmod-vim'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'osyo-manga/vim-watchdogs'
+
+[[plugins]]
+repo = 'thinca/vim-ref'
+
+[[plugins]]
+repo = 'ujihisa/neco-ghc'
+
+[[plugins]]
+repo = 'ujihisa/ref-hoogle'
+
+[[plugins]]
+repo = 'ujihisa/unite-haskellimport'
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+

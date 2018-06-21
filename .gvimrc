@@ -75,6 +75,7 @@ let g:solarized_underline=1
 let g:solarized_italic=1
 let g:solarized_contrast="normal"
 let g:solarized_visibility="normal"
+set background=dark
 colorscheme solarized
 
 "---------------------------------------------------------------------------
