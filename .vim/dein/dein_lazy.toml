@@ -37,7 +37,5 @@ repo = 'ujihisa/unite-haskellimport'
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
-
-[[plugins]]
 repo = 'altercation/vim-colors-solarized'
 

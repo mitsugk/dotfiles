@@ -1,2 +1,4 @@
-doc/tags*
-*.py[cod]
+*~
+*.swp
+tags
+.DS_Store

@@ -1,3 +1,3 @@
-" 改行で自動コメントアウトを無効にする
+" 自動コメント機能を無効化
 " https://qiita.com/necojackarc/items/1f997481764ed42023a7
 au FileType * setlocal formatoptions-=ro
