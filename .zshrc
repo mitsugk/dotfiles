@@ -8,15 +8,6 @@ ZSH_THEME="agnoster"
 
 plugins=(git ruby gem)
 
-<<<<<<< HEAD
-# User configuration
-
-export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
-
-# export MANPATH="/usr/local/man:$MANPATH"
-=======
->>>>>>> 90ab9f9fb113f643dd5eaa89f989662ac57b364f
-
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
