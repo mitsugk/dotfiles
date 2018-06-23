@@ -1,0 +1,12 @@
+# oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
+
+plugins=(git ruby gem)
+
+source $ZSH/oh-my-zsh.sh
+
+alias e='emacsclient -nw -a ""'
+alias emacs='emacsclient -nw -a ""'
+alias ekill='emacsclient -e "(kill-emacs)"'
