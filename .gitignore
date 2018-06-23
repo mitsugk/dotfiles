@@ -1,6 +1,7 @@
 # vim
 /.vim/dein/repos
 /.vim/cache/*
+/.vim/dein/.cache
 
 # zsh
 /.zsh/.zcompdump*
