@@ -1,2 +1,0 @@
-100
-['Shougo/dein.vim', 'Shougo/neocomplcache', 'Shougo/neomru.vim', 'Shougo/neosnippet-snippets', 'Shougo/neosnippet.vim', 'Shougo/unite.vim', 'Shougo/vimproc', 'altercation/vim-colors-solarized', 'eagletmt/ghcmod-vim', 'kana/vim-filetype-haskell', 'osyo-manga/vim-watchdogs', 'thinca/vim-quickrun', 'thinca/vim-ref', 'ujihisa/neco-ghc', 'ujihisa/ref-hoogle', 'ujihisa/unite-haskellimport', 'vim-syntastic/syntastic']
