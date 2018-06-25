@@ -17,7 +17,7 @@ Session.vim
 .emacs.d/auto-save-list/*
 !.gitkeep
 # .emacs.d/elpa/*
-.emacs.d/public_repos/
+.emacs.d/public_repos/*
 !.emacs.d/public_repos/php-mode
 !.gitkeep
 .emacs.d/undohist/*
