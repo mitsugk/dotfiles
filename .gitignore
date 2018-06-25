@@ -1,11 +1,46 @@
-# vim
-/.vim/dein/repos
-/.vim/cache/*
-/.vim/dein/.cache
-
 # zsh
 /.zsh/.zcompdump*
 /.zsh/.zshrc_local
 
-# etc
-recentf*
+# vim
+/.vim/dein/repos
+/.vim/cache/*
+/.vim/dein/.cache
+## vim temp files
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+
+# emacs
+.emacs.d/auto-save-list/*
+# .emacs.d/elpa/*
+.emacs.d/undohist/*
+.emacs.d/url/cache/*
+.emacs.d/resentf*
+## emacs temp files
+.\#*
+
+# Backup files
+#---------------------------
+*~
+*.orig
+*.bak
+# yyyyMMdd
+*.[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]
+# yyyyMMddHHmm
+*.[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]
+# yyyyMMddHHmmss
+*.[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]
+# OS dependent files
+#---------------------------
+.DS_Store
+Thumbs.db
+# Bundler specific
+#---------------------------
+/vendor/bundle/
+/.bundle/
+# Office specific
+~$*
+*.tmp
