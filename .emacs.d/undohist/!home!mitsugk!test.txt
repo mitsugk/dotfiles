@@ -1,3 +1,0 @@
-
-((digest . "77e75fd34da8e2551f0b32871245ef42") (undo-list nil (126 . 129) (" " . 126) (117 . 120) (" " . 117) (108 . 111) (" " . 108) (99 . 102) (" " . 99) nil (apply 0 99 120 cua--rect-undo-handler [99 126 0 0 2 0 t nil] t 99 120) nil (120 . 121) (113 . 114) (106 . 107) (99 . 100) nil (apply 0 99 117 cua--rect-undo-handler [99 117 0 0 2 0 t nil] t 99 117) nil (118 . 122) nil (116 . 118) nil (115 . 116) nil ("3" . 115) nil (109 . 110) nil ("2" . 109) nil (103 . 104) nil ("1" . 103) nil ("-" . 111) nil ("-" . 105) nil ("-" . 99) ((marker . 1) . -1) ((marker . 99) . -1) nil ("
-" . 99) ((marker . 99) . -1) ((marker . 99) . -1) nil undo-tree-canary))

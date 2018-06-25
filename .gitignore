@@ -14,11 +14,11 @@ Session.vim
 .netrwhist
 
 # emacs
-.emacs.d/auto-save-list/*
+#.emacs.d/auto-save-list/*
 # .emacs.d/elpa/*
-.emacs.d/undohist/*
-.emacs.d/url/cache/*
-.emacs.d/resentf*
+#.emacs.d/undohist/*
+#.emacs.d/url/cache/*
+#.emacs.d/resentf*
 ## emacs temp files
 .\#*
 
