@@ -4,6 +4,10 @@
 
 # vim
 /.vim/dein/repos/*
+!/.vim/dein/repos/github.com
+!.gitkeep
+!/.vim/dein/repos/github.com/Shougo
+!.gitkeep
 !dein.vim
 /.vim/cache/*
 /.vim/dein/.cache
