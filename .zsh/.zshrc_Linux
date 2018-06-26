@@ -18,14 +18,18 @@ fi
 source ~/.zplug/init.zsh
 
 ## theme (https://github.com/sindresorhus/pure#zplug)
-zplug "mafredri/zsh-async"
-zplug "sindresorhus/pure"
+#zplug "mafredri/zsh-async"
+#zplug "sindresorhus/pure"
+# peco/fzf/percol/zaw などのラッパー関数を提供するフレームワーク
+zplug "mollifier/anyframe"
+# ディレクトリ移動の高速化
+zplug "b4b4r07/enhancd", use:enhancd.sh
 ## 入力補完
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "chrissicool/zsh-256color"
 ## コマンドを種類ごとに強化 (https://github.com/zsh-users/zsh-syntax-highlighting)
-zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 ## ヒストリ補完の強化
 zplug "zsh-users/zsh-history-substring-search"
 
