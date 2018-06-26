@@ -1,6 +1,7 @@
 # zsh
 /.zsh/.zcompdump*
 /.zsh/.zshrc_local
+/.zsh/.zshrc_local.tmp
 
 # vim
 /.vim/dein/repos/*
