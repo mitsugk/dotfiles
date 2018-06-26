@@ -9,13 +9,30 @@ source $ZSH/oh-my-zsh.sh
 
 # coreutils
 if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
-  export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-  export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
-  alias ls='ls --color=auto'
+    export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
+    alias ls='ls --color=auto'
 else
-  export LSCOLORS=gxfxcxdxbxegedabagacad
-  alias ls='ls -G'
+    export LSCOLORS=gxfxcxdxbxegedabagacad
+    alias ls='ls -G'
 fi
 
 # alias
 alias ctags='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+
+# backward history with peco
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history

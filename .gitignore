@@ -1,6 +1,7 @@
 # zsh
 /.zsh/.zcompdump*
-/.zsh/.zshrc_local
+/.zsh/.zshrc_local*
+!/.zsh/.zshrc_local.tmp
 
 # vim
 /.vim/dein/repos
@@ -25,7 +26,7 @@ Session.vim
 .emacs.d/url/*
 !.emacs.d/url/cache
 !.gitkeep
-#.emacs.d/resentf*
+.emacs.d/resentf*
 
 ## emacs temp files
 .\#*
