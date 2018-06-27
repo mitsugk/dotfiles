@@ -6,8 +6,10 @@
 # vim
 /.vim/dein/.cache
 /.vim/dein/cache_vim
+cache_vi
 /.vim/dein/repos/*
 /.vim/dein/state_vim.vim
+state_vi.vim
 ## vim temp files
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
