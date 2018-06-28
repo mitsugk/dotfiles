@@ -54,3 +54,5 @@ Thumbs.db
 ~$*
 *.tmp
 
+cache_vi
+state_vi.vim
