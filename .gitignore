@@ -4,12 +4,10 @@
 /.zplug
 
 # vim
-/.vim/dein/.cache
-/.vim/dein/cache_vim
+/.vim/dein/*
+!dein.toml
+!dein_lazy.toml
 /.vim/dein/repos/*
-cache_vim
-/.vim/dein/state_vim.vim
-state_vim.vim
 ## vim temp files
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
