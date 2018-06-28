@@ -1,7 +1,7 @@
 # zsh
 /.zsh/.zcompdump*
 /.zsh/.zshrc_local*
-/.zplug
+/.zplug/*
 
 # vim
 /.vim/dein/*
