@@ -1,13 +1,12 @@
 # zsh
 /.zsh/.zcompdump*
 /.zsh/.zshrc_local*
-/.zplug/*
 
 # vim
-/.vim/dein/*
-!dein.toml
-!dein_lazy.toml
+/.vim/dein/.cache
+/.vim/dein/cache_vim
 /.vim/dein/repos/*
+/.vim/dein/state_vim.vim
 ## vim temp files
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
@@ -16,18 +15,18 @@ Session.vim
 .netrwhist
 
 # emacs
-.emacs.d/auto-save-list/*
+/.emacs.d/auto-save-list/*
 !.gitkeep
 # .emacs.d/elpa/*
-.emacs.d/public_repos/*
+/.emacs.d/public_repos/*
 !.emacs.d/public_repos/php-mode
 !.gitkeep
-.emacs.d/undohist/*
+/.emacs.d/undohist/*
 !.gitkeep
-.emacs.d/url/*
+/.emacs.d/url/*
 !.emacs.d/url/cache
 !.gitkeep
-.emacs.d/recentf*
+/.emacs.d/recentf*
 
 ## emacs temp files
 .\#*
@@ -54,3 +53,4 @@ Thumbs.db
 # Office specific
 ~$*
 *.tmp
+
