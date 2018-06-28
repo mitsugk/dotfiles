@@ -14,3 +14,6 @@ repo = 'vim-syntastic/syntastic'
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
 
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+

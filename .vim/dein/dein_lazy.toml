@@ -5,7 +5,7 @@ on_i = 1
 on_ft = ['snippet']
 
 [[plugins]]
-repo      = 'Shougo/neomru.vim'
+repo = 'Shougo/neomru.vim'
 on_source = ['unite.vim']
 
 [[plugins]]
@@ -19,6 +19,7 @@ repo = 'eagletmt/ghcmod-vim'
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
+on_ft = ['python']
 
 [[plugins]]
 repo = 'osyo-manga/vim-watchdogs'
@@ -39,3 +40,10 @@ repo = 'ujihisa/unite-haskellimport'
 repo = 'majutsushi/tagbar'
 repo = 'altercation/vim-colors-solarized'
 
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = ['python']
+
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = ['go']
