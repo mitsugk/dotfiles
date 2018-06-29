@@ -53,6 +53,3 @@ Thumbs.db
 # Office specific
 ~$*
 *.tmp
-
-cache_vi
-state_vi.vim
