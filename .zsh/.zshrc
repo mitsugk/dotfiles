@@ -24,7 +24,6 @@ setopt share_history
 ## alias
 alias vi="vim"
 alias e='emacsclient -nw -a ""'
-alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
 
 # zplug setting
