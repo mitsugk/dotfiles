@@ -526,7 +526,7 @@
  '(display-time-mode t)
  '(package-selected-packages
    (quote
-    (company-ghc company flycheck haskell-mode yaml-mode undo-tree tempbuf sequential-command recentf-ext python-mode multi-term js2-mode init-loader helm flymake edit-server dokuwiki-mode ctags auto-save-buffers-enhanced)))
+    (yatex company-ghc company flycheck haskell-mode yaml-mode undo-tree tempbuf sequential-command recentf-ext python-mode multi-term js2-mode init-loader helm flymake edit-server dokuwiki-mode ctags auto-save-buffers-enhanced)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
