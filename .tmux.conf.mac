@@ -1,0 +1,109 @@
+# tmux setting(https://qiita.com/succi0303/items/cb396704493476373edf)
+
+# exec zsh
+set-option -g default-shell /usr/local/bin/zsh
+
+# change & display Prefix Key
+set -g prefix C-q
+#set-option -g status-right '#(tmux show-options -g prefix)'
+unbind C-b
+
+# decrease delay time for key stroke
+set -sg escape-time 1
+
+# change window/pane index 
+set -g base-index 1
+setw -g pane-base-index 1
+
+# reload .tmux.conf
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+
+# send Ctrl+q
+bind C-q send-prefix
+
+# vertical/horizontal split pane
+bind | split-window -h
+bind - split-window -v
+
+# move panes with vim key bind
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+bind -r C-h select-window -t :-
+bind -r C-l select-window -t :+
+
+# resize panes with vim key bind
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# disable mouse
+setw -g mouse on
+# 256 color terminal
+set -g default-terminal "screen-256color"
+
+# status bar color 
+set -g status-fg black
+set -g status-bg yellow
+
+# windows list color
+setw -g window-status-fg cyan
+setw -g window-status-bg default
+setw -g window-status-attr dim
+# emphasis window
+setw -g window-status-current-fg white
+setw -g window-status-current-bg red
+setw -g window-status-current-attr bright
+
+# pane border color
+set -g pane-border-fg green
+set -g pane-border-bg black
+# enphasis active pane
+set -g pane-active-border-fg white
+set -g pane-active-border-bg yellow
+
+# command line color
+set -g message-fg white
+set -g message-bg black
+set -g message-attr bright
+
+# status bar setting
+## left panel
+set -g status-left-length 40
+set -g status-left "#[fg=green]Session: #S #[fg=yellow]#I #[fg=cyan]#P"
+## right panel
+set -g status-right "#[fg=cyan][%Y-%m-%d(%a) %H:%M]"
+## reflesh interval (default: 15sec)
+set -g status-interval 60
+## centering windows list
+#set -g status-justify centre
+## visual notification
+setw -g monitor-activity on
+set -g visual-activity on
+## status bar position
+# set -g status-position top
+
+# copy mode
+## vi key bind
+setw -g mode-keys vi
+## clipboard share( use reattach-to-user-namespace: https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard)
+set-option -g default-command "reattach-to-user-namespace -l zsh"
+## clipboard with vim key bind
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+unbind -T copy-mode-vi Enter
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+
+# powerline-status
+set-option -g default-terminal screen-256color
+set -g terminal-overrides 'xterm:colors=256'
+run-shell "powerline-daemon -q"
+#source /usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf
+source /usr/local/lib/python3.7/site-packages/powerline/bindings/tmux/powerline.conf
+
+# Screensaver
+set -g lock-after-time 600
+set -g lock-command "cmatrix -s -b"
+
