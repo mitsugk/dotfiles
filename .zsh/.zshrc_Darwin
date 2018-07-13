@@ -1,3 +1,7 @@
+# Japanese setting
+export LANG=ja_JP.UTF-8
+export LESSCHARSET=utf-8
+
 # coreutils
 if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
