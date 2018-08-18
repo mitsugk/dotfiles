@@ -37,10 +37,6 @@ repo = 'ujihisa/ref-hoogle'
 repo = 'ujihisa/unite-haskellimport'
 
 [[plugins]]
-repo = 'majutsushi/tagbar'
-repo = 'altercation/vim-colors-solarized'
-
-[[plugins]]
 repo = 'davidhalter/jedi-vim'
 on_ft = ['python']
 

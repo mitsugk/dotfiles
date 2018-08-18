@@ -17,3 +17,9 @@ repo = 'Shougo/neosnippet-snippets'
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 
+[[plugins]]
+repo = 'majutsushi/tagbar'
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+
