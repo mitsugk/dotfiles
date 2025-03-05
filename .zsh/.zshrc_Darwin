@@ -13,7 +13,9 @@ else
 fi
 
 # alias
-alias ctags='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+#alias ctags='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
 # tmux
 #[[ -z "$TMUX" && ! -z "$PS1" ]] && exec tmux
+
+#eval $(/opt/homebrew/bin/brew shellenv)
